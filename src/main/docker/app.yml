@@ -1,0 +1,14 @@
+version: '2'
+services:
+    nowup-app:
+        image: nowup
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://nowup-postgresql:5432/nowup
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+        ports:
+            - 8081:8081
+    nowup-postgresql:
+        extends:
+            file: postgresql.yml
+            service: nowup-postgresql
