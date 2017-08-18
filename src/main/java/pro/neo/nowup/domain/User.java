@@ -1,5 +1,7 @@
 package pro.neo.nowup.domain;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import pro.neo.nowup.config.Constants;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,6 +14,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.time.ZonedDateTime;
@@ -49,6 +52,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Size(max = 50)
     @Column(name = "last_name", length = 50)
     private String lastName;
+
+    @OneToMany(mappedBy = "owner",fetch = FetchType.LAZY)
+    @JsonIgnore
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<Pet> petList;
 
     @Email
     @Size(min = 5, max = 100)
